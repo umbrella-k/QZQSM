@@ -45,6 +45,10 @@
 #define QZQSM_ENABLE_DC11 // 洪水
 #define QZQSM_ENABLE_DC12 // 台風
 #define QZQSM_ENABLE_DC14 // 海上
+#define QZQSM_ENABLE_DCX_L // Lアラート
+#define QZQSM_ENABLE_DCX_J // Jアラート
+#define QZQSM_ENABLE_DCX_M // 自治体発信情報【仮称】
+#define QZQSM_ENABLE_DCX_ // 海外
 
 #include <Arduino.h>
 #include <stdint.h>
@@ -233,6 +237,54 @@ private:
         int Pl;
       } site[8];
     } Dc14;
+
+    struct {
+      int A1;
+      int A2;
+      int A3;
+      int A4;
+      int A5;
+      int A6;
+      int A7;
+      int A8;
+      int A9;
+      int A10;
+      int A11;
+      int A12;
+      int A13;
+      int A14;
+      int A15;
+      int A16;
+      int A17;
+      int A18;
+    }Dcx;
+
+    struct {
+      int EX1;
+      int EX2;
+      int EX3;
+      int EX4;
+      int EX5;
+      int EX6;
+      int EX7;
+      int Vn;
+    }DcxExL;
+
+    struct {
+      int EX8;
+      int EX9a[46];
+      int EX9b[2];
+      int EX10;
+      int Vn;
+    }DcxExJ;
+
+    struct {
+      int EX11;
+      int Vn;
+      int A11A;
+      int A11B;
+    }DcxEx_;
+
   } _u;
 
   int get_val(int startbit, int bitwidth);
@@ -248,6 +300,10 @@ private:
   void decode_dc11();
   void decode_dc12();
   void decode_dc14();
+  void decode_dcx_l();
+  void decode_dcx_j();
+  void decode_dcx_m();
+  void decode_dcx_();
   int filter_dc1();
   int filter_dc2();
   int filter_dc3();
@@ -260,6 +316,10 @@ private:
   int filter_dc11();
   int filter_dc12();
   int filter_dc14();
+  int filter_dcx_l();
+  int filter_dcx_j();
+  int filter_dcx_m();
+  int filter_dcx_();
   void report_dc1();
   void report_dc2();
   void report_dc3();
@@ -272,7 +332,28 @@ private:
   void report_dc11();
   void report_dc12();
   void report_dc14();
+  void report_dcx_l();
+  void report_dcx_j();
+  void report_dcx_m();
+  void report_dcx_();
   const char* it2str(int code);
+  const char* dcxa1str(int code);
+  const char* dcxa2str(int code);
+  const char* dcxa4str(int code);
+  const char* dcxa5str(int code);
+  const char* dcxa6str(int code);
+  const char* dcxa7str(int code);
+  const char* dcxa8str(int code);
+  const char* dcxa9str(int code);
+  const char* dcxa10str(int code);
+  const char* dcxa11jstr(int code);
+  const char* dcxa11Astr(int code);
+  const char* dcxa11Bstr(int code);
+  const float dcxa12str(int code);
+  const float dcxa13str(int code);
+  const char* dcxa14str(int code);
+  const char* dcxa15str(int code);
+  const float dcxa16str(int code);
   const char* dc1co2str(int code);
   const char* dc1de2str(int de);
   const char* dc1ma2str(int ma);
@@ -306,6 +387,16 @@ private:
   const char* dc12w2str2(int w);
   const char* dc14dw2str(int code);
   const char* dc14pl2str(int code);
+  const char* dcxex1str(int code);
+  const char* dcxex2str(int code);
+  const float dcxex3str(int code);
+  const float dcxex4str(int code);
+  const char* dcxex5str(int code);
+  const char* dcxex6str(int code);
+  const float dcxex7str(int code);
+  const char* dcxex9astr(int code);
+  const char* dcxex9bstr(int code);
+  const char* dcxvnstr(int code);
 
   void utc2jst(int& month, int& day, int& hour, int& minute);
 };
